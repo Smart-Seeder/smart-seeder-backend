@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
 # Load the dataset
-data = pd.read_csv('./plate_predict_dataset.csv')  # Replace 'your_dataset.csv' with the actual filename
+data = pd.read_csv('smart_seeder_backend/plate_predict_dataset.csv')  # Replace 'your_dataset.csv' with the actual filename
 
 # Data Preprocessing
 # Handling Missing Values (if any)
@@ -61,6 +61,6 @@ seed_plate_prediction = seed_best_model.predict([[crop_name_encoded]])[0]
 
 # Prediction for fertilizer_plate_id
 fertilizer_plate_prediction = fertilizer_best_model.predict([[crop_name_encoded]])[0]
-
+print(type(seed_plate_prediction))
 print(f"Predicted seed_plate_id: {seed_plate_prediction}")
 print(f"Predicted fertilizer_plate_id: {fertilizer_plate_prediction}")
