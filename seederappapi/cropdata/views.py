@@ -47,3 +47,13 @@ def get_plate(request, pk):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+import requests
+
+def fetch_realtime_data(request):
+    url = 'https://seeder-db-default-rtdb.firebaseio.com/.json'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return JsonResponse(data)
+    else:
+        return JsonResponse({'error': 'Failed to fetch data from Firebase Realtime Database'}, status=500)
