@@ -32,15 +32,17 @@ def get_plate(request, pk):
     try:
         crop = Crop.objects.get(id=pk)
         name = crop.name
-        seed_plate_id, fertilizer_plate_id = predict_crop(name)
+        seed_plate_id, fertilizer_plate_id, seed_size = predict_crop(name)
         
         # Convert numpy.int64 to Python integers
         seed_plate_id = int(seed_plate_id)
         fertilizer_plate_id = int(fertilizer_plate_id)
+        depth_of_seed = 2*seed_size
         
         return JsonResponse({
             'seed_plate_id': seed_plate_id,
-            'fertilizer_plate_id': fertilizer_plate_id
+            'fertilizer_plate_id': fertilizer_plate_id,
+            'depth_of_seed': depth_of_seed
         })
     except Crop.DoesNotExist:
         return JsonResponse({'error': 'Crop not found'}, status=status.HTTP_404_NOT_FOUND)
