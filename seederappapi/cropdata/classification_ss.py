@@ -4,19 +4,14 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
 
-# Load the dataset
-data = pd.read_csv('./plate_predict_dataset.csv')  # Replace 'your_dataset.csv' with the actual filename
+data = pd.read_csv('./plate_predict_dataset.csv')
 
-# Data Preprocessing
-# Handling Missing Values (if any)
 def predict_crop(crop_name):
     data.fillna(method='ffill', inplace=True)
-
-    # Filter data for the specific crop
     crop_data = data[data['name'] == crop_name]
-    
-    # Calculate average seed size for the specific crop
     avg_seed_size = crop_data['seed_size'].mean()
 
     label_encoder = LabelEncoder()
@@ -30,7 +25,9 @@ def predict_crop(crop_name):
 
     models = {
         'Decision Tree': DecisionTreeClassifier(),
-        'Random Forest': RandomForestClassifier()
+        'Random Forest': RandomForestClassifier(),
+        'SVM': SVC(),
+        'KNN': KNeighborsClassifier()
     }
 
     seed_best_model = None
@@ -53,6 +50,10 @@ def predict_crop(crop_name):
         if fertilizer_accuracy > fertilizer_best_accuracy:
             fertilizer_best_accuracy = fertilizer_accuracy
             fertilizer_best_model = model
+        
+        print(f"Model: {name}")
+        print(f"Seed Plate Accuracy: {seed_accuracy}")
+        print(f"Fertilizer Plate Accuracy: {fertilizer_accuracy}")
 
     crop_name_encoded = label_encoder.transform([crop_name])[0]
 
