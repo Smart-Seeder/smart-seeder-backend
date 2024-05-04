@@ -6,8 +6,12 @@ from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
+from seederappapi import settings
 
-data = pd.read_csv('./plate_predict_dataset.csv')
+import os
+csv_file_path = os.path.join(settings.MEDIA_ROOT, 'plate_predict_dataset.csv')
+
+data = pd.read_csv(csv_file_path)
 
 def predict_crop(crop_name):
     data.fillna(method='ffill', inplace=True)
