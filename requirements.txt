@@ -58,3 +58,4 @@ soupsieve==2.1
 sqlparse==0.4.2
 stack-data==0.6.3
 swapper==1.1.2.post1
+blynklib==0.2.6
